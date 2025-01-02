@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xerebro Layout - Updated</title>
+  <title>Xerebro </title>
   <link rel="stylesheet" href="xerebro2.0.css">
 </head>
 <body>
@@ -94,10 +94,11 @@
         // Scroll to the latest message
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       } else {
-        // Hardcoded response for Zerebro
+        // Fetch fallback response for Zerebro
+        const botResponse = await getFallbackResponse(userMessage);
         const botMsgElement = document.createElement("div");
         botMsgElement.className = "message bot-message";
-        botMsgElement.textContent = "I'm Zerebro! But I’m keeping it simple for now.";
+        botMsgElement.textContent = botResponse;
         messagesContainer.appendChild(botMsgElement);
 
         // Scroll to the latest message
@@ -118,15 +119,32 @@
         }
 
         const data = await response.json();
-        console.log("API Response:", data);  // Log the full response for debugging
+        console.log("API Response:", data);
 
         if (!data || !data.ai_response) {
           return "Sorry, I couldn't retrieve a response from the bot.";
         }
-        return data.ai_response;  // Extract and return the AI's response
+        return data.ai_response;
       } catch (error) {
         console.error("Error fetching response:", error);
-        return "An error occurred while fetching the response.";
+        return await getFallbackResponse(userMessage);
+      }
+    }
+
+    // Function to load fallback response from JSON file
+    async function getFallbackResponse(userMessage) {
+      try {
+        const response = await fetch("get-message.json");
+        const data = await response.json();
+
+        if (userMessage.toLowerCase() === "zerebro") {
+          return "Fallback: Zerebro is ready, but the API seems down!";
+        }
+
+        return data.ai_response || "An error occurred while retrieving a fallback response.";
+      } catch (error) {
+        console.error("Error loading fallback JSON:", error);
+        return "An error occurred, and we couldn't retrieve any response.";
       }
     }
   </script>
