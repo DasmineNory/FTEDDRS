@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xerebro Layout</title>
+  <link rel="stylesheet" href="xerebro2.0.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="letter-x">X</span>
+        <span class="letter-e1">e</span>
+        <span class="letter-r">r</span>
+        <span class="letter-e2">e</span>
+        <span class="letter-b">b</span>
+        <span class="letter-r2">r</span>
+        <span class="letter-o">o</span>
+      </div>
+    </header>
+    
+    <div class="chat-container">
+        <!-- Left Chat Box -->
+        <div class="chat-box left">
+          <div class="chat-header">
+            <img src="./photo_2025-01-02_12-08-10.jpg" alt="Avatar" class="avatar">
+            <span class="title">Xerebro</span>
+          </div>
+          <div class="chat-messages" id="xerebro-messages"></div>
+          <div class="chat-input">
+            <input type="text" id="xerebro-input" placeholder="Start a new message">
+            <button onclick="sendMessage('xerebro')">Send</button>
+          </div>
+        </div>
+      
+        <!-- Right Chat Box -->
+        <div class="chat-box right">
+          <div class="chat-header">
+            <img src="./photo_2025-01-02_12-08-24.jpg" alt="Avatar" class="avatar">
+            <span class="title">Zerebro</span>
+          </div>
+          <div class="chat-messages" id="zerebro-messages"></div>
+          <div class="chat-input">
+            <input type="text" id="zerebro-input" placeholder="Start a new message">
+            <button onclick="sendMessage('zerebro')">Send</button>
+          </div>
+        </div>
+      </div>      
+      <footer>
+        <div class="footer-icons">
+          <a href="https://x.com/XerebroAI" target="_blank">
+            <img src="./photo_2025-01-02_11-16-13.jpg" alt="X Icon" class="icon">
+          </a>
+          <a href="https://t.me/+QlAReXH0Bl84MWI0" target="_blank">
+            <img src="./photo_2025-01-02_11-16-01.jpg" alt="Telegram Icon" class="icon">
+          </a>
+          <a href="https://dexscreener.com/solana/J2ESYCLsPnHw9f1QTsbLdnX72TtFpUStoXmL23xKposP" target="_blank">
+            <img src="./photo_2025-01-02_11-15-55.jpg" alt="Wolf Icon" class="icon">
+          </a>
+        </div>
+      </footer>           
+  </div>
+
+  <script>
+    // Function to handle sending a message
+    function sendMessage(chatboxId) {
+      const inputField = document.getElementById(`${chatboxId}-input`);
+      const messagesContainer = document.getElementById(`${chatboxId}-messages`);
+      const userMessage = inputField.value.trim();
+  
+      if (userMessage === "") return;
+  
+      // Display user's message
+      const userMsgElement = document.createElement("div");
+      userMsgElement.className = "message user-message";
+      userMsgElement.textContent = userMessage;
+      messagesContainer.appendChild(userMsgElement);
+  
+      // Clear the input field
+      inputField.value = "";
+  
+      // Scroll to the latest message
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  
+      // Generate bot response
+      setTimeout(() => {
+        const botMsgElement = document.createElement("div");
+        botMsgElement.className = "message bot-message";
+        botMsgElement.textContent = generateBotResponse(userMessage);
+        messagesContainer.appendChild(botMsgElement);
+  
+        // Scroll to the latest message
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 500); 
+    }
+  
+    // Simple bot response logic
+    function generateBotResponse(userMessage) {
+      const lowerMessage = userMessage.toLowerCase();
+  
+      if (lowerMessage.includes("hello")) {
+        return "Hi there! How can I help you today?";
+      } else if (lowerMessage.includes("how are you")) {
+        return "I'm just a bot, but I'm doing great! Thanks for asking.";
+      } else {
+        return "I'm not sure how to respond to that, but I'm here to help!";
+      }
+    }
+  </script>
+  
+</body>
+</html>

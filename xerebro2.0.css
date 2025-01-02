@@ -1,0 +1,224 @@
+@font-face {
+  font-family: 'Cerebro';
+  src: url('./Cerebro.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: #fff;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  header .logo {
+    font-family: 'Cerebro', sans-serif;
+    font-size: 4rem;
+    display: inline-flex;
+    font-weight: bold;
+    cursor: pointer;
+    gap: 0.1rem;
+  }
+  
+  .letter-x {
+    color: #6B3FA5;
+  }
+  
+  .letter-e1 {
+    color: #368CD0;
+  }
+  
+  .letter-r {
+    color: #F59193;
+  }
+  
+  .letter-e2 {
+    color: #A281E8;
+  }
+  
+  .letter-b {
+    color: #87B06A;
+  }
+  
+  .letter-r2 {
+    color: #7A56C7;
+  }
+  
+  .letter-o {
+    color: #3949AB;
+  }
+  
+  
+  .chat-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 2rem auto;
+    width: 80%;
+  }
+  
+  .chat-box {
+    background-color: #1a1a1a; 
+    border: 5px solid transparent; 
+    border-radius: 10px; 
+    width: 30%; 
+    height: 500px; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .chat-box.left {
+    border-color: #2f7ab3;
+  }
+  
+  .chat-box.right {
+    border-color: #8e4c8a;
+  }
+  
+  .chat-box:hover {
+    transform: scale(1.02);
+  }
+
+  .chat-box.right .chat-input button {
+    background-color: #8e4c8a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .chat-box.right .chat-input button:hover {
+    background-color: #6d3a6a; 
+    transition: background-color 0.2s ease;
+  }
+  
+  .chat-box.left .chat-input button:hover {
+    background-color: #336e9b; 
+    transition: background-color 0.2s ease;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #000000; 
+    padding: 10px;
+    border-bottom: 2px solid #444;
+  }  
+  
+.avatar {
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none; 
+}
+
+  .title {
+    font-family: 'Cerebro', sans-serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    gap: 0.1rem;
+    color: #b4b3b3;
+    
+  }
+  
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #000000;
+    border-radius: 5px;
+  }
+
+  .chat-messages .message {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .chat-messages .user-message {
+    background-color: #3498DB;
+    text-align: left;
+  }
+  
+  .chat-messages .bot-message {
+    background-color: #9B59B6;
+    text-align: right;
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #000000; 
+    border-top: 2px solid #181717; 
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  .chat-input button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #3498DB;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  
+.chat-input button:hover {
+    background-color: #2980B9;
+  }
+  
+  footer {
+    margin-top: 2rem;
+    color: #aaa;
+  }
+  
+  .footer-icons {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 25px; 
+  }
+  
+  .footer-icons .icon {
+    width: 50px; 
+    height: 50px; 
+    cursor: pointer;
+    border-radius: 50px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  
+  .footer-icons .icon:hover {
+    transform: scale(1.2); 
+    transition: transform 0.2s ease;
+    filter: brightness(1.2); 
+  }
+  
+  /* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .chat-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .chat-box {
+      width: 90%;
+    }
+  }

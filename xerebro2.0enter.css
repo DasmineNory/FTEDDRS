@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'Cerebro';
+    src: url('./Cerebro.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    text-align: center;
+    color: white;
+  }
+
+  .logo {
+    font-family: 'Cerebro', Arial, sans-serif;
+    font-size: 4rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-bottom: 30px; 
+  }
+
+  .logo span {
+    display: inline-block;
+  }
+
+  .logo .x { color: #6B3FA5; }
+  .logo .e1 { color: #368CD0; }
+  .logo .r1 { color: #F59193; }
+  .logo .e2 { color: #A281E8; }
+  .logo .b { color: #87B06A; }
+  .logo .r2 { color: #7A56C7; }
+  .logo .o { color: #3949AB; }
+
+  .enter {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .enter:hover {
+    background-color: white;
+    color: black;
+    border-radius: 3px;
+  }
