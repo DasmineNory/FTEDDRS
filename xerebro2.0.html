@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xerebro Layout</title>
+  <title>Xerebro Layout - Updated</title>
   <link rel="stylesheet" href="xerebro2.0.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
           <div class="chat-messages" id="xerebro-messages"></div>
           <div class="chat-input">
             <input type="text" id="xerebro-input" placeholder="Start a new message">
-            <button onclick="sendMessage('xerebro')">Send</button>
+            <button id="xerebro-send">Send</button>
           </div>
         </div>
       
@@ -64,50 +64,74 @@
 
   <script>
     // Function to handle sending a message
-    function sendMessage(chatboxId) {
+    async function sendMessage(chatboxId) {
       const inputField = document.getElementById(`${chatboxId}-input`);
       const messagesContainer = document.getElementById(`${chatboxId}-messages`);
       const userMessage = inputField.value.trim();
-  
+
       if (userMessage === "") return;
-  
+
       // Display user's message
       const userMsgElement = document.createElement("div");
       userMsgElement.className = "message user-message";
       userMsgElement.textContent = userMessage;
       messagesContainer.appendChild(userMsgElement);
-  
+
       // Clear the input field
       inputField.value = "";
-  
+
       // Scroll to the latest message
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  
-      // Generate bot response
-      setTimeout(() => {
+
+      if (chatboxId === "xerebro") {
+        // Fetch and display the bot response
+        const botResponse = await generateBotResponse(userMessage);
         const botMsgElement = document.createElement("div");
         botMsgElement.className = "message bot-message";
-        botMsgElement.textContent = generateBotResponse(userMessage);
+        botMsgElement.textContent = botResponse;
         messagesContainer.appendChild(botMsgElement);
-  
+
         // Scroll to the latest message
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }, 500); 
-    }
-  
-    // Simple bot response logic
-    function generateBotResponse(userMessage) {
-      const lowerMessage = userMessage.toLowerCase();
-  
-      if (lowerMessage.includes("hello")) {
-        return "Hi there! How can I help you today?";
-      } else if (lowerMessage.includes("how are you")) {
-        return "I'm just a bot, but I'm doing great! Thanks for asking.";
       } else {
-        return "I'm not sure how to respond to that, but I'm here to help!";
+        // Hardcoded response for Zerebro
+        const botMsgElement = document.createElement("div");
+        botMsgElement.className = "message bot-message";
+        botMsgElement.textContent = "I'm Zerebro! But I’m keeping it simple for now.";
+        messagesContainer.appendChild(botMsgElement);
+
+        // Scroll to the latest message
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
       }
     }
+
+    // Function to fetch bot response from the API
+    async function generateBotResponse(userMessage) {
+      const apiUrl = `https://xerebro-f8a9chefgcdthmhe.eastus2-01.azurewebsites.net/get-message?message=${encodeURIComponent(userMessage)}`;
+      console.log(`API Request URL: ${apiUrl}`);  // Debugging: Log the request URL
+      try {
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          console.error(`HTTP error: ${response.status} - ${response.statusText}`);
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data);  // Log the full response for debugging
+
+        if (!data || !data.ai_response) {
+          return "Sorry, I couldn't retrieve a response from the bot.";
+        }
+        return data.ai_response; // Extract and return the AI's response
+      } catch (error) {
+        console.error("Error fetching response:", error);
+        return "An error occurred while fetching the response.";
+      }
+    }
+
+    // Add event listener for Xerebro Send button
+    document.getElementById('xerebro-send').addEventListener('click', () => sendMessage('xerebro'));
   </script>
-  
 </body>
 </html>
