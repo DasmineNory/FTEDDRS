@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xerebro</title>
+  <title>Xerebro and Zerebro Chatbot</title>
   <link rel="stylesheet" href="xerebro2.0.css">
 </head>
 <body>
@@ -130,10 +130,27 @@
     async function fetchFallbackResponse(userMessage) {
       try {
         const response = await fetch('get-message.json');
-        const data = await response.json();
+        if (!response.ok) {
+          throw new Error('Could not load fallback response');
+        }
 
-        console.log("Fallback JSON Response:", data);
-        return data.ai_response || "Fallback response: No data available.";
+        const data = await response.json();
+        console.log("Fallback JSON Data:", data);  // Log the entire data to inspect the structure
+
+        // Loop through the array of responses and match the received_message
+        const matchedResponse = data.responses.find(response => {
+          console.log(`Checking if "${response.received_message}" matches "${userMessage}"`); // Log the matching process
+          return response.received_message.toLowerCase().trim() === userMessage.toLowerCase().trim();
+        });
+
+        if (matchedResponse) {
+          console.log("Matched response:", matchedResponse.ai_response);  // Log matched response
+          return matchedResponse.ai_response;
+        } else {
+          console.log("No matching response found");
+          return "Fallback response: I have no response for that message.";
+        }
+
       } catch (error) {
         console.error("Error loading fallback JSON:", error);
         return "An error occurred while fetching the response.";
