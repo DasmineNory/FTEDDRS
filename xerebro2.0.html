@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xerebro </title>
+  <title>Xerebro</title>
   <link rel="stylesheet" href="xerebro2.0.css">
 </head>
 <body>
@@ -19,51 +19,51 @@
         <span class="letter-o">o</span>
       </div>
     </header>
-    
+
     <div class="chat-container">
-        <!-- Left Chat Box -->
-        <div class="chat-box left">
-          <div class="chat-header">
-            <img src="./photo_2025-01-02_12-08-24.jpg" alt="Avatar" class="avatar">
-            <span class="title">Xerebro</span>
-          </div>
-          <div class="chat-messages" id="xerebro-messages"></div>
-          <div class="chat-input">
-            <input type="text" id="xerebro-input" placeholder="Start a new message">
-            <button onclick="sendMessage('xerebro')">Send</button>
-          </div>
+      <!-- Left Chat Box -->
+      <div class="chat-box left">
+        <div class="chat-header">
+          <img src="./photo_2025-01-02_12-08-24.jpg" alt="Avatar" class="avatar">
+          <span class="title">Xerebro</span>
         </div>
-      
-        <!-- Right Chat Box -->
-        <div class="chat-box right">
-          <div class="chat-header">
-            <img src="./photo_2025-01-02_12-08-10.jpg" alt="Avatar" class="avatar">
-            <span class="title">Zerebro</span>
-          </div>
-          <div class="chat-messages" id="zerebro-messages"></div>
-          <div class="chat-input">
-            <input type="text" id="zerebro-input" placeholder="Start a new message">
-            <button onclick="sendMessage('zerebro')">Send</button>
-          </div>
+        <div class="chat-messages" id="xerebro-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="xerebro-input" placeholder="Start a new message">
+          <button onclick="sendMessage('xerebro')">Send</button>
         </div>
-      </div>      
-      <footer>
-        <div class="footer-icons">
-          <a href="https://x.com/XerebroAI" target="_blank">
-            <img src="./photo_2025-01-02_11-16-13.jpg" alt="X Icon" class="icon">
-          </a>
-          <a href="https://t.me/+QlAReXH0Bl84MWI0" target="_blank">
-            <img src="./photo_2025-01-02_11-16-01.jpg" alt="Telegram Icon" class="icon">
-          </a>
-          <a href="https://dexscreener.com/solana/J2ESYCLsPnHw9f1QTsbLdnX72TtFpUStoXmL23xKposP" target="_blank">
-            <img src="./photo_2025-01-02_11-15-55.jpg" alt="Wolf Icon" class="icon">
-          </a>
+      </div>
+
+      <!-- Right Chat Box -->
+      <div class="chat-box right">
+        <div class="chat-header">
+          <img src="./photo_2025-01-02_12-08-10.jpg" alt="Avatar" class="avatar">
+          <span class="title">Zerebro</span>
         </div>
-      </footer>           
+        <div class="chat-messages" id="zerebro-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="zerebro-input" placeholder="Start a new message">
+          <button onclick="sendMessage('zerebro')">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-icons">
+        <a href="https://x.com/XerebroAI" target="_blank">
+          <img src="./photo_2025-01-02_11-16-13.jpg" alt="X Icon" class="icon">
+        </a>
+        <a href="https://t.me/+QlAReXH0Bl84MWI0" target="_blank">
+          <img src="./photo_2025-01-02_11-16-01.jpg" alt="Telegram Icon" class="icon">
+        </a>
+        <a href="https://dexscreener.com/solana/J2ESYCLsPnHw9f1QTsbLdnX72TtFpUStoXmL23xKposP" target="_blank">
+          <img src="./photo_2025-01-02_11-15-55.jpg" alt="Wolf Icon" class="icon">
+        </a>
+      </div>
+    </footer>
   </div>
 
   <script>
-    // Function to handle sending a message
     async function sendMessage(chatboxId) {
       const inputField = document.getElementById(`${chatboxId}-input`);
       const messagesContainer = document.getElementById(`${chatboxId}-messages`);
@@ -84,35 +84,30 @@
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
       if (chatboxId === "xerebro") {
-        // Fetch and display the bot response
+        // Fetch Xerebro bot response
         const botResponse = await generateBotResponse(userMessage);
         const botMsgElement = document.createElement("div");
         botMsgElement.className = "message bot-message";
         botMsgElement.textContent = botResponse;
         messagesContainer.appendChild(botMsgElement);
 
-        // Scroll to the latest message
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       } else {
-        // Fetch fallback response for Zerebro
-        const botResponse = await getFallbackResponse(userMessage);
+        // Zerebro bot behavior (static response)
         const botMsgElement = document.createElement("div");
         botMsgElement.className = "message bot-message";
-        botMsgElement.textContent = botResponse;
+        botMsgElement.textContent = `I'm Zerebro! I'm here for a simple chat.`;
         messagesContainer.appendChild(botMsgElement);
 
-        // Scroll to the latest message
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       }
     }
 
-    // Function to fetch bot response from the API
     async function generateBotResponse(userMessage) {
       const apiUrl = `https://xerebro-f8a9chefgcdthmhe.eastus2-01.azurewebsites.net/get-message?message=${encodeURIComponent(userMessage)}`;
-      
+
       try {
         const response = await fetch(apiUrl);
-
         if (!response.ok) {
           console.error(`HTTP error: ${response.status} - ${response.statusText}`);
           throw new Error(`HTTP error: ${response.status}`);
@@ -122,29 +117,26 @@
         console.log("API Response:", data);
 
         if (!data || !data.ai_response) {
-          return "Sorry, I couldn't retrieve a response from the bot.";
+          throw new Error("Invalid API response");
         }
+
         return data.ai_response;
       } catch (error) {
         console.error("Error fetching response:", error);
-        return await getFallbackResponse(userMessage);
+        return await fetchFallbackResponse(userMessage);
       }
     }
 
-    // Function to load fallback response from JSON file
-    async function getFallbackResponse(userMessage) {
+    async function fetchFallbackResponse(userMessage) {
       try {
-        const response = await fetch("get-message.json");
+        const response = await fetch('get-message.json');
         const data = await response.json();
 
-        if (userMessage.toLowerCase() === "zerebro") {
-          return "Fallback: Zerebro is ready, but the API seems down!";
-        }
-
-        return data.ai_response || "An error occurred while retrieving a fallback response.";
+        console.log("Fallback JSON Response:", data);
+        return data.ai_response || "Fallback response: No data available.";
       } catch (error) {
         console.error("Error loading fallback JSON:", error);
-        return "An error occurred, and we couldn't retrieve any response.";
+        return "An error occurred while fetching the response.";
       }
     }
   </script>
